@@ -23,16 +23,6 @@ app.use(morgan("dev"));
 const userRoutes = require("./routes/userRoutes");
 
 app.use("/api/v1/user", userRoutes);
-/* app.get("/", (req, res) => {
-  res.status(200).send({
-    message: "home page",
-  });
-}); */
-
-/* con.query("SELECT * FROM movies;", function (err, results, fields) {
-  console.log(results); // results contains rows returned by server
-  //console.log(fields); // fields contains extra meta data about results, if available
-}); */
 
 // listen
 app.listen(port, () => {
