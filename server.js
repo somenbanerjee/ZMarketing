@@ -1,11 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
-const dotenv = require("dotenv");
-const con = require("./config/database");
 
-//console.log(connectDB);
 // dotenv config
+const dotenv = require("dotenv");
 dotenv.config();
+
+// Mysql Database Connection
+require("./config/database");
+
 
 // rest Object
 const app = express();
@@ -18,16 +20,19 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 //routes
-app.get("/", (req, res) => {
+const userRoutes = require("./routes/userRoutes");
+
+app.use("/api/v1/user", userRoutes);
+/* app.get("/", (req, res) => {
   res.status(200).send({
     message: "home page",
   });
-});
+}); */
 
-con.query("SELECT * FROM movies;", function (err, results, fields) {
+/* con.query("SELECT * FROM movies;", function (err, results, fields) {
   console.log(results); // results contains rows returned by server
   //console.log(fields); // fields contains extra meta data about results, if available
-});
+}); */
 
 // listen
 app.listen(port, () => {
