@@ -5,10 +5,6 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Mysql Database Connection
-require("./config/database");
-
-
 // rest Object
 const app = express();
 
