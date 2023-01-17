@@ -12,6 +12,7 @@ const userSchemas = {
     email: Joi.string().email().required(),
     pan: Joi.string().required().custom(pan),
     mobile: Joi.number().required().custom(mobile),
+    password: Joi.string().required(),
   }),
 };
 

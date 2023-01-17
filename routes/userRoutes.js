@@ -7,7 +7,10 @@ const { userController } = require("../controllers");
 const router = express.Router();
 
 router.post("/login", validateSchema(userSchemas.login), userController.login);
-router.post("/register", validateSchema(userSchemas.register), userController.register);
-router.post("/test", userController.login);
+router.post(
+  "/register",
+  validateSchema(userSchemas.register),
+  userController.register
+);
 
 module.exports = router;
