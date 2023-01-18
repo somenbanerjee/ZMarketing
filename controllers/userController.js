@@ -126,7 +126,7 @@ const login = async (req, res) => {
 
 /**
  *
- * @desc Get daa of a logged in user
+ * @desc Get data of the logged in user
  * @route GET /api/v1/user/profile
  * @access Private
  *
@@ -161,7 +161,7 @@ const getProfile = async (req, res) => {
 
 /**
  *
- * @desc Get daa of a logged in user
+ * @desc update profile details of the logged in user
  * @route PUT /api/v1/user/profile/
  * @access Private
  *

@@ -15,7 +15,7 @@ router.post(
   validateSchema(userSchemas.register),
   userController.register
 );
-router.get("/profile", userController.getProfile)
-router.post("/profile", userController.updateProfile)
+router.get("/profile", userController.getProfile);
+router.put("/profile", userController.updateProfile);
 
 module.exports = router;
