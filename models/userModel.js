@@ -29,7 +29,7 @@ const getNewMemberCode = async () => {
 const create = async (data) => {
   try {
     const query =
-      "INSERT INTO `member`(`member_code`, `password`, `intro_id`, `intro_level`, `intro_tree`, `name`, `mobile`, `email`, `pan`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO `member`(`member_code`, `password`, `intro_id`, `intro_level`, `intro_tree`, `name`, `mobile`, `email`, `pan`, `created_by`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     const row = await conn.execute(query, [
       data.memberCode,
@@ -41,6 +41,7 @@ const create = async (data) => {
       data.mobile,
       data.email,
       data.pan,
+      data.createdBy,
     ]);
     return singleObject(row).insertId;
   } catch (err) {

@@ -34,6 +34,7 @@ const register = async (req, res) => {
       mobile,
       email,
       pan,
+      createdBy: req.user.username
     };
     const result = await userModel.create(memberData);
 
