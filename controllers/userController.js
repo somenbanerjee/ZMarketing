@@ -124,7 +124,91 @@ const login = async (req, res) => {
   }
 };
 
+/**
+ *
+ * @desc Get daa of a logged in user
+ * @route GET /api/v1/user/profile
+ * @access Private
+ *
+ */
+const getProfile = async (req, res) => {
+  try {
+    const userData = await userModel.findByMemberCode(req.user.username);
+    if (!userData)
+      return res
+        .status(404)
+        .json({ status: "fail", message: "Member data not found." });
+
+    res.status(200).json({
+      status: "success",
+      message: "Data found successfully.",
+      data: {
+        name: userData.name,
+        memberCode: userData.member_code,
+        mobile: userData.mobile,
+        email: userData.email,
+        pan: userData.pan,
+        createdOn: userData.created_on,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
+/**
+ *
+ * @desc Get daa of a logged in user
+ * @route PUT /api/v1/user/profile/
+ * @access Private
+ *
+ */
+const updateProfile = async (req, res) => {
+  try {
+    const { name, mobile, email, pan } = req.body;
+
+    const userData = await userModel.findByMemberCode(req.user.username);
+    if (!userData)
+      return res
+        .status(404)
+        .json({ status: "fail", message: "Member data not found." });
+
+    // updated member data
+    const memberData = {
+      memberCode: req.user.username,
+      name,
+      mobile,
+      email,
+      pan,
+    };
+    const result = await userModel.update(memberData);
+
+    if (result)
+      res.status(201).json({
+        status: "success",
+        message: "Record is updated successfully.",
+        data: { ...memberData },
+      });
+    else
+      res.status(400).json({
+        status: "error",
+        message: "Something went wrong. Please try again.",
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "error",
+      message: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
+  getProfile,
+  updateProfile,
 };

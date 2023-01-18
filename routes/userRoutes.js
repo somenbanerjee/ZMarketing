@@ -8,10 +8,14 @@ const { userController } = require("../controllers");
 const router = express.Router();
 
 router.post("/login", validateSchema(userSchemas.login), userController.login);
+
+router.use(auth);
 router.post(
   "/register",
-  [auth, validateSchema(userSchemas.register)],
+  validateSchema(userSchemas.register),
   userController.register
 );
+router.get("/profile", userController.getProfile)
+router.post("/profile", userController.updateProfile)
 
 module.exports = router;

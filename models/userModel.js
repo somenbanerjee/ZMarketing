@@ -49,8 +49,27 @@ const create = async (data) => {
   }
 };
 
+const update = async (data) => {
+  try {
+    const query =
+      "UPDATE `member` SET `name` = ?, `mobile` = ?, `email` = ?, `pan` = ? WHERE member_code = ?";
+
+    const row = await conn.execute(query, [
+      data.name,
+      data.mobile,
+      data.email,
+      data.pan,
+      data.memberCode,
+    ]);
+    return singleObject(row).affectedRows;
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   findByMemberCode,
   getNewMemberCode,
   create,
+  update,
 };
