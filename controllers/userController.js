@@ -49,7 +49,7 @@ const register = async (req, res) => {
         },
       });
     else
-      res.status(500).json({
+      res.status(400).json({
         status: "error",
         message: "Something went wrong. Please try again.",
       });
@@ -79,20 +79,29 @@ const login = async (req, res) => {
         message: "You have entered an invalid username or password.",
       });
     const token = jwt.sign(
-      { id: userData.id, username: userData.member_code },
-      "key",
+      {
+        user: {
+          id: userData.member_id,
+          username: userData.member_code,
+        },
+      },
+      process.env.TOKEN_SECRET,
       { expiresIn: "1h" }
     );
-    res.status(200).json({
-      status: "success",
-      message: "Logged in successfully.",
-      data: {
-        username: userData.member_code,
-        name: userData.name,
-        email: userData.email,
-      },
-      token: token,
-    });
+    if (token) {
+      res.status(200).json({
+        status: "success",
+        message: "Logged in successfully.",
+        data: {
+          username: userData.member_code,
+          name: userData.name,
+          email: userData.email,
+        },
+        token: token,
+      });
+    } else {
+      throw new Error();
+    }
   } catch (err) {
     res.status(500).json({
       status: "error",
