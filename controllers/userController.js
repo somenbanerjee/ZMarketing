@@ -3,6 +3,13 @@ const jwt = require("jsonwebtoken");
 
 const { userModel } = require("../models/");
 
+/**
+ *
+ * @desc Register a new user
+ * @route POST /api/v1/user/register
+ * @access Private
+ *
+ */
 const register = async (req, res) => {
   const { introducerCode, name, mobile, email, pan, password } = req.body;
   try {
@@ -23,7 +30,7 @@ const register = async (req, res) => {
 
     const hashPassword = await bcrypt.hash(password, 12);
 
-    // register
+    // new member data
     const memberData = {
       memberCode,
       password: hashPassword,
@@ -34,7 +41,7 @@ const register = async (req, res) => {
       mobile,
       email,
       pan,
-      createdBy: req.user.username
+      createdBy: req.user.username,
     };
     const result = await userModel.create(memberData);
 
@@ -55,7 +62,6 @@ const register = async (req, res) => {
         message: "Something went wrong. Please try again.",
       });
   } catch (err) {
-    console.log(err);
     res.status(500).json({
       status: "error",
       message: "Your request could not be processed. Please try again.",
@@ -63,6 +69,13 @@ const register = async (req, res) => {
   }
 };
 
+/**
+ *
+ * @desc Login an existing user
+ * @route POST api/v1/user/login
+ * @access Public
+ *
+ */
 const login = async (req, res) => {
   const { username, password } = req.body;
   try {
