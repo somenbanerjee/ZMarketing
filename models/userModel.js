@@ -12,6 +12,17 @@ const findByMemberCode = async (memberCode) => {
   }
 };
 
+const isMemberPresent = async (memberCode) => {
+  try {
+    const query =
+      "SELECT COUNT(`member_id`) AS member_count FROM `member` WHERE `member_code` = ?";
+    const [rows] = await conn.execute(query, [memberCode]);
+    return rows.length > 0 ? singleObject(rows) : null;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const getNewMemberCode = async () => {
   try {
     do {
@@ -69,6 +80,7 @@ const update = async (data) => {
 };
 
 module.exports = {
+  isMemberPresent,
   findByMemberCode,
   getNewMemberCode,
   create,
