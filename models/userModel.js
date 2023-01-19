@@ -3,7 +3,8 @@ const { singleObject, uniqueNumber } = require("../util/helpers");
 
 const findByMemberCode = async (memberCode) => {
   try {
-    const query = "SELECT * FROM `member` WHERE `member_code` = ?";
+    const query =
+      "SELECT `member_id`, `member_code`, `password`, `intro_id`, `intro_level`, `name`, `mobile`, `email`, `pan` FROM `member` WHERE `member_code` = ?";
     const [rows] = await conn.execute(query, [memberCode]);
     return rows.length > 0 ? singleObject(rows) : null;
   } catch (err) {
