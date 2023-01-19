@@ -17,5 +17,6 @@ router.post(
 );
 router.get("/profile", userController.getProfile);
 router.put("/profile", userController.updateProfile);
+router.get("/members", userController.getMemberDetailsByIntroId);
 
 module.exports = router;

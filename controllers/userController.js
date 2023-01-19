@@ -206,9 +206,41 @@ const updateProfile = async (req, res) => {
   }
 };
 
+/**
+ *
+ * @desc Get data of the logged in user
+ * @route GET /api/v1/user/profile
+ * @access Private
+ *
+ */
+const getMemberDetailsByIntroId = async (req, res) => {
+  try {
+    const userData = await userModel.getMemberDetailsByIntroId(req.user.id);
+    if (!userData)
+      return res
+        .status(404)
+        .json({ status: "fail", message: "No Members found." });
+
+    res.status(200).json({
+      status: "success",
+      message: "Members found successfully.",
+      data: {
+        ...userData,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "error",
+      message: "Your request could not be processed. Please try again.",
+    });
+  }
+};
+
 module.exports = {
   register,
   login,
   getProfile,
   updateProfile,
+  getMemberDetailsByIntroId,
 };

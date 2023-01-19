@@ -79,10 +79,22 @@ const update = async (data) => {
   }
 };
 
+const getMemberDetailsByIntroId = async (memberId) => {
+  try {
+    const query =
+      "SELECT `member_id`, `member_code`, `password`, `intro_level`, `name`, `mobile`, `email`, `pan` FROM `member` WHERE `intro_id` = ?";
+    const [rows] = await conn.execute(query, [memberId]);
+    return rows.length > 0 ? rows : null;
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   isMemberPresent,
   findByMemberCode,
   getNewMemberCode,
   create,
   update,
+  getMemberDetailsByIntroId,
 };
